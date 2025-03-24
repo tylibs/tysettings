@@ -14,7 +14,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(TINYSETTINGS_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(CMAKE_MODULE_PATH "${TINYSETTINGS_DIR}/platform"
-                      "${TINYSETTINGS_DIR}/lib/tinyplatform/cmake")
+                      "${TINYSETTINGS_DIR}/lib/tinycommon/cmake")
 
 # add build extensions for tinylibs
 include(extensions)
