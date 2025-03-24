@@ -1,6 +1,3 @@
-[submodule "lib/tinyplatform"]
-	path = lib/tinyplatform
-	url = git@github.com:tinybus/tinyplatform.git
 [submodule "lib/tinycommon"]
 	path = lib/tinycommon
 	url = https://github.com/tinybus/tinycommon
