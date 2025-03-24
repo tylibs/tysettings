@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: Copyright 2025 Clever Design (Switzerland) GmbH
+# SPDX-License-Identifier: Apache-2.0
+cmake_minimum_required(VERSION 3.20.0)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+project(hello_world)
+
+# include tinysettings module
+#
+# Note the second, binary_dir parameter requires the added subdirectory to have
+# its own, local cmake target(s). If not then this binary_dir is created but
+# stays empty. Object files land in the main binary dir instead.
+# https://cmake.org/pipermail/cmake/2019-June/069547.html
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../..
+                 ${CMAKE_CURRENT_BINARY_DIR}/../../..)
+
+tiny_link_libraries(tinysettings)
+
+# Application Files
+add_subdirectory(src)

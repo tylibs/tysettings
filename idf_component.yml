@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: Copyright 2025 Clever Design (Switzerland) GmbH
+# SPDX-License-Identifier: Apache-2.0
+
+version: 1.0.4
+description: "TinySettings Library - persist global app settings"
+license: "Apache-2.0"
+repository: "https://github.com/tinybus/tinysettings"
+dependencies:
+  idf: ">=5.0"
+tags:
+  - "architecture"
+files:
+  exclude:
+    - "docs"
+    - "docs/**/*"

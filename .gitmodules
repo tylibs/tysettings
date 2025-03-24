@@ -1,0 +1,3 @@
+[submodule "lib/tinyplatform"]
+	path = lib/tinyplatform
+	url = git@github.com:tinybus/tinyplatform.git
