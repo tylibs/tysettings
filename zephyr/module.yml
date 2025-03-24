@@ -2,3 +2,5 @@ name: tinysettings
 build:
   cmake: ./
   kconfig: ./Kconfig
+  depends:
+    - tinyplatform

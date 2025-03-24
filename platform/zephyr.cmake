@@ -2,9 +2,10 @@ cmake_minimum_required(VERSION 3.20)
 
 tiny_library_named(tinysettings)
 
-# Include tinyplatform
-add_subdirectory(${TINYSETTINGS_DIR}/../tinyplatform
-                 ${TINYSETTINGS_DIR}/build/tiny)
+zephyr_library()
+zephyr_library_sources(${TINYCOMMON_DIR}/src/empty_file.c)
 
 tiny_include_directories(${TINYSETTINGS_DIR}/include)
 add_subdirectory(${TINYSETTINGS_DIR}/src)
+
+zephyr_link_libraries(tinysettings)
