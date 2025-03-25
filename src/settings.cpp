@@ -13,10 +13,4 @@
 #include <tinyplatform/toolchain.h>
 
 #include "tinysettings-config.h"
-#include "tinysettings/tinysettings.hpp"
-
-tbError tsLoad(TsSetting *aSettingsDefault)
-{
-    TI_UNUSED_VARIABLE(aSettingsDefault);
-    return TI_ERROR_NONE;
-}
+#include "tinysettings/settings.h"

@@ -1,24 +1,63 @@
 config TINYSETTINGS
-    bool "TinySettings Library"
-    help
-        This option enables the TinySettings Library
+	bool "TinySettings Library"
+	help
+		This option enables the TinySettings Library
 
 if TINYSETTINGS
 menu "TinySettings configuration"
-    config TINYSETTINGS_DUALBANK
-        bool "Enable Dualbank"
-        default "y"
-        help
-            Selects whether to enable dualbank.
-            Gives the ability to have two banks of settings.
-            This is useful for having a backup bank of settings.
+config TINYSETTINGS_DUALBANK
+	bool "Enable Dualbank"
+	default "y"
+	help
+		Selects whether to enable dualbank.
+		Gives the ability to have two banks of settings.
+		This is useful for having a backup bank of settings.
 
+choice TINYSETTINGS_BACKEND
+	prompt "Storage back-end"
+	default TINYSETTINGS_NVS if NVS
+	default TINYSETTINGS_NONE
+	help
+		Storage back-end to be used by the settings subsystem.
 
-    config TINYSETTINGS_LOG
-        bool "Enable logging"
-        default "y"
-        help
-            Selects whether logging messages.
+config TINYSETTINGS_NVS
+	bool "NVS non-volatile storage support"
+	depends on NVS
+	help
+		Uses the NVS storage backend.
 
-endmenu
+if TINYSETTINGS_NVS
+
+config TINYSETTINGS_NVS_NAME_CACHE
+	bool "NVS name lookup cache"
+	help
+		Enable NVS name lookup cache, used to reduce the Settings name
+		lookup time.
+
+config TINYSETTINGS_NVS_NAME_CACHE_SIZE
+	int "NVS name lookup cache size"
+	default 128
+	range 1 65535
+	depends on TINYSETTINGS_NVS_NAME_CACHE
+	help
+		Number of entries in Settings NVS name cache.
+
+endif # TINYSETTINGS_NVS
+
+config TINYSETTINGS_NONE
+	bool "NONE"
+	help
+		No storage back-end.
+
+endchoice # TINYSETTINGS_BACKEND
+
+config TINYSETTINGS_LOG
+	bool "Enable logging"
+	default "y"
+	select LOG_COLORS if ESP_PLATFORM
+	select LOG_DBG_COLOR_BLUE if ZEPHYR_PLATFORM
+	help
+		Selects whether logging messages.
+
+endmenu # TinySettings configuration
 endif # TINYSETTINGS
