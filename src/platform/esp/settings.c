@@ -1,4 +1,8 @@
 
+
+// SPDX-FileCopyrightText: Copyright 2025 Clever Design (Switzerland) GmbH
+// SPDX-License-Identifier: Apache-2.0
+
 #include "tinysettings/settings.h"
 #include "esp_check.h"
 #include "nvs.h"
