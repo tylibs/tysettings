@@ -9,7 +9,7 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include "tinysettings/tinysettings.hpp"
+#include "tinysettings/settings.h"
 
 #define LOG_MODULE_NAME main
 LOG_MODULE_REGISTER(main);

@@ -21,9 +21,9 @@ repos:
     rev: v1.5.5
     hooks:
       - id: forbid-tabs
-        exclude: \.mk$|Makefile
+        exclude: \.mk$|Makefile|Kconfig|\.gitmodules
       - id: remove-tabs
-        exclude: \.mk$|Makefile
+        exclude: \.mk$|Makefile|Kconfig|\.gitmodules
         args:
           - --whitespaces-count
           - "4"
