@@ -17,6 +17,6 @@
 
 tbError tsLoad(TsSetting *aSettingsDefault)
 {
-    TB_UNUSED_VARIABLE(aSettingsDefault);
-    return TB_ERROR_NONE;
+    TI_UNUSED_VARIABLE(aSettingsDefault);
+    return TI_ERROR_NONE;
 }
