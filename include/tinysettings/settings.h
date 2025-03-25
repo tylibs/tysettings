@@ -25,13 +25,13 @@ extern "C" {
  */
 enum
 {
-    TS_SETTINGS_KEY_ACTIVE_DATASET  = 0x0001, ///< Active Operational Dataset.
-    TS_SETTINGS_KEY_PENDING_DATASET = 0x0002, ///< Pending Operational Dataset.
-    TS_SETTINGS_KEY_NETWORK_INFO    = 0x0003, ///< Thread network information.
+    TINY_SETTINGS_KEY_ACTIVE_DATASET  = 0x0001, ///< Active Operational Dataset.
+    TINY_SETTINGS_KEY_PENDING_DATASET = 0x0002, ///< Pending Operational Dataset.
+    TINY_SETTINGS_KEY_NETWORK_INFO    = 0x0003, ///< Thread network information.
 
     // Keys in range 0x8000-0xffff are reserved for vendor-specific use.
-    TS_SETTINGS_KEY_VENDOR_RESERVED_MIN = 0x8000,
-    TS_SETTINGS_KEY_VENDOR_RESERVED_MAX = 0xffff,
+    TINY_SETTINGS_KEY_VENDOR_RESERVED_MIN = 0x8000,
+    TINY_SETTINGS_KEY_VENDOR_RESERVED_MAX = 0xffff,
 };
 
 /**
@@ -46,14 +46,14 @@ enum
  *                                   @p aSensitiveKeysLength is 0, which means that there is no sensitive keys.
  * @param[in]  aSensitiveKeysLength  The number of entries in the @p aSensitiveKeys array.
  */
-void tsInit(tiInstance *aInstance, const uint16_t *aSensitiveKeys, uint16_t aSensitiveKeysLength);
+void tinyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKeys, uint16_t aSensitiveKeysLength);
 
 /**
  * Performs any de-initialization for the settings subsystem, if necessary.
  *
  * @param[in]  aInstance The OpenThread instance structure.
  */
-void tsDeinit(tiInstance *aInstance);
+void tinyPlatSettingsDeinit(tinyInstance *aInstance);
 
 /**
  * Fetches the value of a setting.
@@ -85,11 +85,15 @@ void tsDeinit(tiInstance *aInstance);
  *                               the actual length of the setting is written. This may be set to NULL if performing
  *                               a presence check.
  *
- * @retval TS_ERROR_NONE             The given setting was found and fetched successfully.
- * @retval TS_ERROR_NTS_FOUND        The given setting was not found in the setting store.
- * @retval TS_ERROR_NTS_IMPLEMENTED  This function is not implemented on this platform.
+ * @retval TINY_ERROR_NONE             The given setting was found and fetched successfully.
+ * @retval TINY_ERROR_NTINY_FOUND        The given setting was not found in the setting store.
+ * @retval TINY_ERROR_NTINY_IMPLEMENTED  This function is not implemented on this platform.
  */
-tiError tsGet(tiInstance *aInstance, uint16_t aKey, int aIndex, uint8_t *aValue, uint16_t *aValueLength);
+tinyError tinyPlatSettingsGet(tinyInstance *aInstance,
+                              uint16_t      aKey,
+                              int           aIndex,
+                              uint8_t      *aValue,
+                              uint16_t     *aValueLength);
 
 /**
  * Sets or replaces the value of a setting.
@@ -114,11 +118,11 @@ tiError tsGet(tiInstance *aInstance, uint16_t aKey, int aIndex, uint8_t *aValue,
  *                           @p aValueLength is non-zero.
  * @param[in]  aValueLength  The length of the data pointed to by aValue. May be zero.
  *
- * @retval TS_ERROR_NONE             The given setting was changed or staged.
- * @retval TS_ERROR_NTS_IMPLEMENTED  This function is not implemented on this platform.
- * @retval TS_ERROR_NO_BUFS          No space remaining to store the given setting.
+ * @retval TINY_ERROR_NONE             The given setting was changed or staged.
+ * @retval TINY_ERROR_NTINY_IMPLEMENTED  This function is not implemented on this platform.
+ * @retval TINY_ERROR_NO_BUFS          No space remaining to store the given setting.
  */
-tiError tsSet(tiInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength);
+tinyError tinyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength);
 
 /**
  * Adds a value to a setting.
@@ -150,11 +154,11 @@ tiError tsSet(tiInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint1
  *                           if @p aValueLength is non-zero.
  * @param[in]  aValueLength  The length of the data pointed to by @p aValue. May be zero.
  *
- * @retval TS_ERROR_NONE             The given setting was added or staged to be added.
- * @retval TS_ERROR_NTS_IMPLEMENTED  This function is not implemented on this platform.
- * @retval TS_ERROR_NO_BUFS          No space remaining to store the given setting.
+ * @retval TINY_ERROR_NONE             The given setting was added or staged to be added.
+ * @retval TINY_ERROR_NTINY_IMPLEMENTED  This function is not implemented on this platform.
+ * @retval TINY_ERROR_NO_BUFS          No space remaining to store the given setting.
  */
-tiError tsAdd(tiInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength);
+tinyError tinyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength);
 
 /**
  * Removes a setting from the setting store.
@@ -171,11 +175,11 @@ tiError tsAdd(tiInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint1
  * @param[in] aIndex     The index of the value to be removed. If set to -1, all values for this @p aKey will be
  *                       removed.
  *
- * @retval TS_ERROR_NONE             The given key and index was found and removed successfully.
- * @retval TS_ERROR_NOT_FOUND        The given key or index was not found in the setting store.
- * @retval TS_ERROR_NOT_IMPLEMENTED  This function is not implemented on this platform.
+ * @retval TINY_ERROR_NONE             The given key and index was found and removed successfully.
+ * @retval TINY_ERROR_NOT_FOUND        The given key or index was not found in the setting store.
+ * @retval TINY_ERROR_NOT_IMPLEMENTED  This function is not implemented on this platform.
  */
-tiError tsDelete(tiInstance *aInstance, uint16_t aKey, int aIndex);
+tinyError tinyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIndex);
 
 /**
  * Removes all settings from the setting store.
@@ -185,7 +189,7 @@ tiError tsDelete(tiInstance *aInstance, uint16_t aKey, int aIndex);
  *
  * @param[in] aInstance  The OpenThread instance structure.
  */
-void tsWipe(tiInstance *aInstance);
+void tinyPlatSettingsWipe(tinyInstance *aInstance);
 
 #ifdef __cplusplus
 } // extern "C"

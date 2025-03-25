@@ -19,12 +19,12 @@ const char *TAG = "main";
 /*****************************************************************************/
 
 // // just as a hint, but better not to pack, because this object only lives once
-// TI_TOOL_PACKED_BEGIN
+// TINY_TOOL_PACKED_BEGIN
 // struct AppPersistentSettings : TsSetting
 // {
 //     int a;
 //     int b;
-// } TI_TOOL_PACKED_END;
+// } TINY_TOOL_PACKED_END;
 
 // // keep the settings in global scope but not accessible (in C this would be static)
 // // the Settings will be injected in each module to support testing setups
@@ -34,7 +34,7 @@ const char *TAG = "main";
 
 extern "C" void app_main()
 {
-    tiLog(TI_LOG_LEVEL_WARN, "app", "App started");
+    tinyPlatLog(TINY_LOG_LEVEL_WARN, "app", "App started");
     // mAppPersistentSettings.magic = 0x1234;
     // mAppPersistentSettings.len   = sizeof(mAppPersistentSettings);
     // mAppPersistentSettings.a     = 1;
