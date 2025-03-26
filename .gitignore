@@ -56,3 +56,4 @@ coverage_report/
 # VS Code Settings
 .vscode/
 /.pytest_cache/
+/tmp/

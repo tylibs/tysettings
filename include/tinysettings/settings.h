@@ -10,7 +10,7 @@
 #ifndef TINYSETTINGS_SETTINGS_H
 #define TINYSETTINGS_SETTINGS_H
 
-#include <tinyplatform/instance.h>
+#include <tiny/instance.h>
 
 #ifdef __cplusplus
 extern "C" {

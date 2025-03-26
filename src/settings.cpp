@@ -9,8 +9,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include <tinyplatform/platform.h>
-#include <tinyplatform/toolchain.h>
+#include <tiny/platform.h>
+#include <tiny/platform/toolchain.h>
 
 #include "tinysettings-config.h"
 #include "tinysettings/settings.h"

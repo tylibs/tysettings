@@ -10,8 +10,8 @@
 #include <esp_log.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-#include <tinyplatform/logging.h>
-#include <tinyplatform/toolchain.h>
+#include <tiny/logging.h>
+#include <tiny/toolchain.h>
 #include <tinysettings/settings.h>
 
 const char *TAG = "main";

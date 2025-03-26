@@ -13,7 +13,8 @@ project(hello_world)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../..
                  ${CMAKE_CURRENT_BINARY_DIR}/../../..)
 
-tiny_link_libraries(tinysettings)
+add_executable(app)
+target_link_libraries(app PUBLIC tinysettings)
 
 # Application Files
 add_subdirectory(src)
