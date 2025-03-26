@@ -19,7 +19,7 @@
 static nvs_handle_t s_ot_nvs_handle;
 static const char  *s_storage_name;
 
-const char *TINY_PLAT_LOG_TAG = "TINY_PLAT";
+const char *TINY_PLAT_LOG_TAG = "settings";
 
 void esp_openthread_set_storage_name(const char *name)
 {

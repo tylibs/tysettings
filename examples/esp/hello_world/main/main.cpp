@@ -14,6 +14,8 @@
 #include <tiny/platform/toolchain.h>
 #include <tinysettings/settings.h>
 
+#include <nvs_flash.h>
+
 const char *TAG = "main";
 
 /*****************************************************************************/
@@ -36,6 +38,16 @@ extern "C" void app_main()
 {
     tinyInstance *instance;
     tinyLogInfoPlat("Starting TinySettings example");
+    // Initialize NVS
+
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
+    {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+        ESP_LOGE(TAG, "NVS flash erased");
+    }
+
     instance = tinyInstanceInitSingle();
     // Initialize the settings subsystem
     tinyPlatSettingsInit(instance, NULL, 0);
