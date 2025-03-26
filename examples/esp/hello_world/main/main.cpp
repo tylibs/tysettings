@@ -11,7 +11,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <tiny/logging.h>
-#include <tiny/toolchain.h>
+#include <tiny/platform/toolchain.h>
 #include <tinysettings/settings.h>
 
 const char *TAG = "main";
@@ -34,16 +34,15 @@ const char *TAG = "main";
 
 extern "C" void app_main()
 {
-    tinyPlatLog(TINY_LOG_LEVEL_WARN, "app", "App started");
-    // mAppPersistentSettings.magic = 0x1234;
-    // mAppPersistentSettings.len   = sizeof(mAppPersistentSettings);
-    // mAppPersistentSettings.a     = 1;
-
-    // tsLoad(&mAppPersistentSettings);
-
+    tinyInstance *instance;
+    tinyLogInfoPlat("Starting TinySettings example");
+    instance = tinyInstanceInitSingle();
+    // Initialize the settings subsystem
+    tinyPlatSettingsInit(instance, NULL, 0);
     while (true)
     {
         // next event in 1 second
         vTaskDelay(5000 / portTICK_PERIOD_MS);
     }
+    tinyInstanceFinalize(instance);
 }

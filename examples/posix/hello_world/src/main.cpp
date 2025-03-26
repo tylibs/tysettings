@@ -10,12 +10,14 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <tiny/instance.h>
+#include <tiny/logging.h>
 #include <unistd.h>
 #include "tinysettings/settings.h"
 
 extern "C" int main(void)
 {
     tinyInstance *instance;
+    tinyLogInfoPlat("Starting TinySettings example");
     instance = tinyInstanceInitSingle();
     // Initialize the settings subsystem
     tinyPlatSettingsInit(instance, NULL, 0);
