@@ -6,9 +6,6 @@
  *   This file implements the settings file module for getting, setting and deleting the key-value pairs.
  */
 
-#include "platform-posix.h"
-#include "tinysettings-posix-config.h"
-
 #include <fcntl.h>
 #include <inttypes.h>
 #include <stddef.h>

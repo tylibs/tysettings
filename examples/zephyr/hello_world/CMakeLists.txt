@@ -8,6 +8,6 @@ list(APPEND EXTRA_ZEPHYR_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/../../../
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
 project(hello_world)
-
+target_link_libraries(app PRIVATE tinysettings)
 # Application Files
 add_subdirectory(src)

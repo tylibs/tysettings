@@ -6,9 +6,6 @@
 
 #include <tiny/tiny-core-config.h>
 
-#include "platform-posix.h"
-#include "tinysettings-posix-config.h"
-
 namespace tiny {
 namespace Posix {
 

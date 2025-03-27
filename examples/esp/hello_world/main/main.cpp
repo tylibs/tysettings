@@ -12,7 +12,7 @@
 #include <freertos/task.h>
 #include <tiny/logging.h>
 #include <tiny/platform/toolchain.h>
-#include <tinysettings/settings.h>
+#include <tinysettings/platform/settings.h>
 
 #include <nvs_flash.h>
 

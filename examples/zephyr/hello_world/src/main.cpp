@@ -11,7 +11,7 @@
 #include <tiny/platform/toolchain.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include "tinysettings/settings.h"
+#include "tinysettings/platform/settings.h"
 
 #define LOG_MODULE_NAME main
 LOG_MODULE_REGISTER(main);

@@ -5,9 +5,6 @@
  *   This file implements the Tiny platform abstraction for non-volatile storage of settings.
  */
 
-#include "platform-posix.h"
-#include "tiny-posix-config.h"
-
 #include <assert.h>
 #include <fcntl.h>
 #include <inttypes.h>
