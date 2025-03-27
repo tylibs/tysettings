@@ -1,5 +1,6 @@
 config TINYSETTINGS
 	bool "TinySettings Library"
+	select SETTINGS if ZEPHYR_PLATFORM
 	help
 		This option enables the TinySettings Library
 
