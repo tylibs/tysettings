@@ -21,7 +21,7 @@
 // #include <tiny/platform/radio.h>
 
 #include <tinysettings/platform/settings.h>
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
 #include <tiny/platform/secure_settings.h>
 #endif
 
@@ -34,7 +34,7 @@
 
 static tiny::Posix::SettingsFile sSettingsFile;
 
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
 static const uint16_t *sSensitiveKeys       = nullptr;
 static uint16_t        sSensitiveKeysLength = 0;
 
@@ -61,23 +61,23 @@ static tinyError settingsFileInit(tinyInstance *aInstance)
     const char             *offset = getenv("PORT_OFFSET");
     uint64_t                nodeId;
 
-    // tinyPlatRadioGetIeeeEui64(aInstance, reinterpret_cast<uint8_t *>(&nodeId));
+    // tyPlatRadioGetIeeeEui64(aInstance, reinterpret_cast<uint8_t *>(&nodeId));
     // nodeId = tiny::BigEndian::HostSwap64(nodeId);
     nodeId = 0x1234567890abcdef;
     snprintf(fileBaseName, sizeof(fileBaseName), "%s_%" PRIx64, offset == nullptr ? "0" : offset, nodeId);
-    VerifyOrDie(strlen(fileBaseName) < kMaxFileBaseNameSize, TINY_EXIT_FAILURE);
+    VerifyOrDie(strlen(fileBaseName) < kMaxFileBaseNameSize, TY_EXIT_FAILURE);
 
     return sSettingsFile.Init(fileBaseName);
 }
 
-void tinyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKeys, uint16_t aSensitiveKeysLength)
+void tyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKeys, uint16_t aSensitiveKeysLength)
 {
-#if !TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
-    TINY_UNUSED_VARIABLE(aSensitiveKeys);
-    TINY_UNUSED_VARIABLE(aSensitiveKeysLength);
+#if !TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+    TY_UNUSED_VARIABLE(aSensitiveKeys);
+    TY_UNUSED_VARIABLE(aSensitiveKeysLength);
 #endif
 
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
     sSensitiveKeys       = aSensitiveKeys;
     sSensitiveKeysLength = aSensitiveKeysLength;
 #endif
@@ -86,7 +86,7 @@ void tinyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKey
     // VerifyOrExit(!IsSystemDryRun());
     SuccessOrExit(settingsFileInit(aInstance));
 
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
     otPosixSecureSettingsInit(aInstance);
 #endif
 
@@ -94,13 +94,13 @@ exit:
     return;
 }
 
-void tinyPlatSettingsDeinit(tinyInstance *aInstance)
+void tyPlatSettingsDeinit(tinyInstance *aInstance)
 {
-    TINY_UNUSED_VARIABLE(aInstance);
+    TY_UNUSED_VARIABLE(aInstance);
 
     // VerifyOrExit(!IsSystemDryRun());
 
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
     otPosixSecureSettingsDeinit(aInstance);
 #endif
 
@@ -110,18 +110,14 @@ exit:
     return;
 }
 
-tinyError tinyPlatSettingsGet(tinyInstance *aInstance,
-                              uint16_t      aKey,
-                              int           aIndex,
-                              uint8_t      *aValue,
-                              uint16_t     *aValueLength)
+tinyError tyPlatSettingsGet(tinyInstance *aInstance, uint16_t aKey, int aIndex, uint8_t *aValue, uint16_t *aValueLength)
 {
-    TINY_UNUSED_VARIABLE(aInstance);
+    TY_UNUSED_VARIABLE(aInstance);
 
-    tinyError error = TINY_ERROR_NOT_FOUND;
+    tinyError error = TY_ERROR_NOT_FOUND;
 
     // VerifyOrExit(!IsSystemDryRun());
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
     if (isSensitiveKey(aKey))
     {
         error = otPosixSecureSettingsGet(aInstance, aKey, aIndex, aValue, aValueLength);
@@ -133,17 +129,17 @@ tinyError tinyPlatSettingsGet(tinyInstance *aInstance,
     }
 
 exit:
-    VerifyOrDie(error != TINY_ERROR_PARSE, TINY_EXIT_FAILURE);
+    VerifyOrDie(error != TY_ERROR_PARSE, TY_EXIT_FAILURE);
     return error;
 }
 
-tinyError tinyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
+tinyError tyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
 {
-    TINY_UNUSED_VARIABLE(aInstance);
+    TY_UNUSED_VARIABLE(aInstance);
 
-    tinyError error = TINY_ERROR_NONE;
+    tinyError error = TY_ERROR_NONE;
 
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
     if (isSensitiveKey(aKey))
     {
         error = otPosixSecureSettingsSet(aInstance, aKey, aValue, aValueLength);
@@ -157,13 +153,13 @@ tinyError tinyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint
     return error;
 }
 
-tinyError tinyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
+tinyError tyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
 {
-    TINY_UNUSED_VARIABLE(aInstance);
+    TY_UNUSED_VARIABLE(aInstance);
 
-    tinyError error = TINY_ERROR_NONE;
+    tinyError error = TY_ERROR_NONE;
 
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
     if (isSensitiveKey(aKey))
     {
         error = otPosixSecureSettingsAdd(aInstance, aKey, aValue, aValueLength);
@@ -177,13 +173,13 @@ tinyError tinyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint
     return error;
 }
 
-tinyError tinyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIndex)
+tinyError tyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIndex)
 {
-    TINY_UNUSED_VARIABLE(aInstance);
+    TY_UNUSED_VARIABLE(aInstance);
 
     tinyError error;
 
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
     if (isSensitiveKey(aKey))
     {
         error = otPosixSecureSettingsDelete(aInstance, aKey, aIndex);
@@ -197,10 +193,10 @@ tinyError tinyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIn
     return error;
 }
 
-void tinyPlatSettingsWipe(tinyInstance *aInstance)
+void tyPlatSettingsWipe(tinyInstance *aInstance)
 {
-    TINY_UNUSED_VARIABLE(aInstance);
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+    TY_UNUSED_VARIABLE(aInstance);
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
     otPosixSecureSettingsWipe(aInstance);
 #endif
 
@@ -209,10 +205,10 @@ void tinyPlatSettingsWipe(tinyInstance *aInstance)
 
 namespace ot {
 namespace Posix {
-#if TINY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
+#if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
 void PlatformSettingsGetSensitiveKeys(tinyInstance *aInstance, const uint16_t **aKeys, uint16_t *aKeysLength)
 {
-    TINY_UNUSED_VARIABLE(aInstance);
+    TY_UNUSED_VARIABLE(aInstance);
 
     assert(aKeys != nullptr);
     assert(aKeysLength != nullptr);
@@ -233,18 +229,18 @@ void PlatformSettingsGetSensitiveKeys(tinyInstance *aInstance, const uint16_t **
 
 void otLogCritPlat(const char *aFormat, ...)
 {
-    TINY_UNUSED_VARIABLE(aFormat);
+    TY_UNUSED_VARIABLE(aFormat);
 }
 
 const char *otExitCodeToString(uint8_t aExitCode)
 {
-    TINY_UNUSED_VARIABLE(aExitCode);
+    TY_UNUSED_VARIABLE(aExitCode);
     return "";
 }
 
-void tinyPlatRadioGetIeeeEui64(tinyInstance *aInstance, uint8_t *aIeeeEui64)
+void tyPlatRadioGetIeeeEui64(tinyInstance *aInstance, uint8_t *aIeeeEui64)
 {
-    TINY_UNUSED_VARIABLE(aInstance);
+    TY_UNUSED_VARIABLE(aInstance);
 
     memset(aIeeeEui64, 0, sizeof(uint64_t));
 }
@@ -265,132 +261,132 @@ int main()
         data[i] = i;
     }
 
-    tinyPlatSettingsInit(instance, nullptr, 0);
+    tyPlatSettingsInit(instance, nullptr, 0);
 
     // verify empty situation
-    tinyPlatSettingsWipe(instance);
+    tyPlatSettingsWipe(instance);
     {
         uint8_t  value[sizeof(data)];
         uint16_t length = sizeof(value);
 
-        assert(tinyPlatSettingsGet(instance, 0, 0, value, &length) == TINY_ERROR_NOT_FOUND);
-        assert(tinyPlatSettingsDelete(instance, 0, 0) == TINY_ERROR_NOT_FOUND);
-        assert(tinyPlatSettingsDelete(instance, 0, -1) == TINY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsGet(instance, 0, 0, value, &length) == TY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsDelete(instance, 0, 0) == TY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsDelete(instance, 0, -1) == TY_ERROR_NOT_FOUND);
     }
 
     // verify write one record
-    assert(tinyPlatSettingsSet(instance, 0, data, sizeof(data) / 2) == TINY_ERROR_NONE);
+    assert(tyPlatSettingsSet(instance, 0, data, sizeof(data) / 2) == TY_ERROR_NONE);
     {
         uint8_t  value[sizeof(data)];
         uint16_t length = sizeof(value);
 
-        assert(tinyPlatSettingsGet(instance, 0, 0, nullptr, nullptr) == TINY_ERROR_NONE);
-        assert(tinyPlatSettingsGet(instance, 0, 0, nullptr, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 0, nullptr, nullptr) == TY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 0, nullptr, &length) == TY_ERROR_NONE);
         assert(length == sizeof(data) / 2);
 
         length = sizeof(value);
-        assert(tinyPlatSettingsGet(instance, 0, 0, value, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 0, value, &length) == TY_ERROR_NONE);
         assert(length == sizeof(data) / 2);
         assert(0 == memcmp(value, data, length));
 
         // insufficient buffer
         length -= 1;
         value[length] = 0;
-        assert(tinyPlatSettingsGet(instance, 0, 0, value, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 0, value, &length) == TY_ERROR_NONE);
         // verify length becomes the actual length of the record
         assert(length == sizeof(data) / 2);
         // verify this byte is not changed
         assert(value[length] == 0);
 
         // wrong index
-        assert(tinyPlatSettingsGet(instance, 0, 1, nullptr, nullptr) == TINY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsGet(instance, 0, 1, nullptr, nullptr) == TY_ERROR_NOT_FOUND);
         // wrong key
-        assert(tinyPlatSettingsGet(instance, 1, 0, nullptr, nullptr) == TINY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsGet(instance, 1, 0, nullptr, nullptr) == TY_ERROR_NOT_FOUND);
     }
-    tinyPlatSettingsWipe(instance);
+    tyPlatSettingsWipe(instance);
 
     // verify write two records
-    assert(tinyPlatSettingsSet(instance, 0, data, sizeof(data)) == TINY_ERROR_NONE);
-    assert(tinyPlatSettingsAdd(instance, 0, data, sizeof(data) / 2) == TINY_ERROR_NONE);
+    assert(tyPlatSettingsSet(instance, 0, data, sizeof(data)) == TY_ERROR_NONE);
+    assert(tyPlatSettingsAdd(instance, 0, data, sizeof(data) / 2) == TY_ERROR_NONE);
     {
         uint8_t  value[sizeof(data)];
         uint16_t length = sizeof(value);
 
-        assert(tinyPlatSettingsGet(instance, 0, 1, value, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 1, value, &length) == TY_ERROR_NONE);
         assert(length == sizeof(data) / 2);
         assert(0 == memcmp(value, data, length));
 
         length = sizeof(value);
-        assert(tinyPlatSettingsGet(instance, 0, 0, value, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 0, value, &length) == TY_ERROR_NONE);
         assert(length == sizeof(data));
         assert(0 == memcmp(value, data, length));
     }
-    tinyPlatSettingsWipe(instance);
+    tyPlatSettingsWipe(instance);
 
     // verify write two records of different keys
-    assert(tinyPlatSettingsSet(instance, 0, data, sizeof(data)) == TINY_ERROR_NONE);
-    assert(tinyPlatSettingsAdd(instance, 1, data, sizeof(data) / 2) == TINY_ERROR_NONE);
+    assert(tyPlatSettingsSet(instance, 0, data, sizeof(data)) == TY_ERROR_NONE);
+    assert(tyPlatSettingsAdd(instance, 1, data, sizeof(data) / 2) == TY_ERROR_NONE);
     {
         uint8_t  value[sizeof(data)];
         uint16_t length = sizeof(value);
 
-        assert(tinyPlatSettingsGet(instance, 1, 0, value, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 1, 0, value, &length) == TY_ERROR_NONE);
         assert(length == sizeof(data) / 2);
         assert(0 == memcmp(value, data, length));
 
         length = sizeof(value);
-        assert(tinyPlatSettingsGet(instance, 0, 0, value, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 0, value, &length) == TY_ERROR_NONE);
         assert(length == sizeof(data));
         assert(0 == memcmp(value, data, length));
     }
-    tinyPlatSettingsWipe(instance);
+    tyPlatSettingsWipe(instance);
 
     // verify delete record
-    assert(tinyPlatSettingsAdd(instance, 0, data, sizeof(data)) == TINY_ERROR_NONE);
-    assert(tinyPlatSettingsAdd(instance, 0, data, sizeof(data) / 2) == TINY_ERROR_NONE);
-    assert(tinyPlatSettingsAdd(instance, 0, data, sizeof(data) / 3) == TINY_ERROR_NONE);
+    assert(tyPlatSettingsAdd(instance, 0, data, sizeof(data)) == TY_ERROR_NONE);
+    assert(tyPlatSettingsAdd(instance, 0, data, sizeof(data) / 2) == TY_ERROR_NONE);
+    assert(tyPlatSettingsAdd(instance, 0, data, sizeof(data) / 3) == TY_ERROR_NONE);
     {
         uint8_t  value[sizeof(data)];
         uint16_t length = sizeof(value);
 
         // wrong key
-        assert(tinyPlatSettingsDelete(instance, 1, 0) == TINY_ERROR_NOT_FOUND);
-        assert(tinyPlatSettingsDelete(instance, 1, -1) == TINY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsDelete(instance, 1, 0) == TY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsDelete(instance, 1, -1) == TY_ERROR_NOT_FOUND);
 
         // wrong index
-        assert(tinyPlatSettingsDelete(instance, 0, 3) == TINY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsDelete(instance, 0, 3) == TY_ERROR_NOT_FOUND);
 
         // delete one record
-        assert(tinyPlatSettingsDelete(instance, 0, 1) == TINY_ERROR_NONE);
-        assert(tinyPlatSettingsGet(instance, 0, 1, value, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsDelete(instance, 0, 1) == TY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 1, value, &length) == TY_ERROR_NONE);
         assert(length == sizeof(data) / 3);
         assert(0 == memcmp(value, data, length));
 
         // delete all records
-        assert(tinyPlatSettingsDelete(instance, 0, -1) == TINY_ERROR_NONE);
-        assert(tinyPlatSettingsGet(instance, 0, 0, nullptr, nullptr) == TINY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsDelete(instance, 0, -1) == TY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 0, nullptr, nullptr) == TY_ERROR_NOT_FOUND);
     }
-    tinyPlatSettingsWipe(instance);
+    tyPlatSettingsWipe(instance);
 
     // verify delete all records of a type
-    assert(tinyPlatSettingsAdd(instance, 0, data, sizeof(data)) == TINY_ERROR_NONE);
-    assert(tinyPlatSettingsAdd(instance, 1, data, sizeof(data) / 2) == TINY_ERROR_NONE);
-    assert(tinyPlatSettingsAdd(instance, 0, data, sizeof(data) / 3) == TINY_ERROR_NONE);
+    assert(tyPlatSettingsAdd(instance, 0, data, sizeof(data)) == TY_ERROR_NONE);
+    assert(tyPlatSettingsAdd(instance, 1, data, sizeof(data) / 2) == TY_ERROR_NONE);
+    assert(tyPlatSettingsAdd(instance, 0, data, sizeof(data) / 3) == TY_ERROR_NONE);
     {
         uint8_t  value[sizeof(data)];
         uint16_t length = sizeof(value);
 
-        assert(tinyPlatSettingsDelete(instance, 0, -1) == TINY_ERROR_NONE);
-        assert(tinyPlatSettingsGet(instance, 0, 0, value, &length) == TINY_ERROR_NOT_FOUND);
-        assert(tinyPlatSettingsGet(instance, 1, 0, value, &length) == TINY_ERROR_NONE);
+        assert(tyPlatSettingsDelete(instance, 0, -1) == TY_ERROR_NONE);
+        assert(tyPlatSettingsGet(instance, 0, 0, value, &length) == TY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsGet(instance, 1, 0, value, &length) == TY_ERROR_NONE);
         assert(length == sizeof(data) / 2);
         assert(0 == memcmp(value, data, length));
 
-        assert(tinyPlatSettingsDelete(instance, 0, 0) == TINY_ERROR_NOT_FOUND);
-        assert(tinyPlatSettingsGet(instance, 0, 0, nullptr, nullptr) == TINY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsDelete(instance, 0, 0) == TY_ERROR_NOT_FOUND);
+        assert(tyPlatSettingsGet(instance, 0, 0, nullptr, nullptr) == TY_ERROR_NOT_FOUND);
     }
-    tinyPlatSettingsWipe(instance);
-    tinyPlatSettingsDeinit(instance);
+    tyPlatSettingsWipe(instance);
+    tyPlatSettingsDeinit(instance);
 
     return 0;
 }

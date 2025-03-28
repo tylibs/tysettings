@@ -20,12 +20,12 @@ const char *TAG = "main";
 
 /*****************************************************************************/
 // just as a hint, but better not to pack, because this object only lives once
-TINY_TOOL_PACKED_BEGIN
+TY_TOOL_PACKED_BEGIN
 struct AppPersistentSettings
 {
     int a;
     int b;
-} TINY_TOOL_PACKED_END;
+} TY_TOOL_PACKED_END;
 
 // keep the settings in global scope but not accessible (in C this would be static)
 // the Settings will be injected in each module to support testing setups
@@ -36,7 +36,7 @@ AppPersistentSettings mAppPersistentSettings = {1, 2};
 extern "C" void app_main()
 {
     tinyInstance *instance;
-    tinyLogInfoPlat("Starting TinySettings example");
+    tyLogInfoPlat("Starting TinySettings example");
     // Initialize NVS
 
     esp_err_t ret = nvs_flash_init();
@@ -49,8 +49,8 @@ extern "C" void app_main()
 
     instance = tinyInstanceInitSingle();
     // Initialize the settings subsystem
-    tinyPlatSettingsInit(instance, NULL, 0);
-    tinyPlatSettingsSet(instance, 1, (uint8_t *)&mAppPersistentSettings, sizeof(mAppPersistentSettings));
+    tyPlatSettingsInit(instance, NULL, 0);
+    tyPlatSettingsSet(instance, 1, (uint8_t *)&mAppPersistentSettings, sizeof(mAppPersistentSettings));
     while (true)
     {
         // next event in 1 second

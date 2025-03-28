@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: Copyright 2025 Clever Design (Switzerland) GmbH
 // SPDX-License-Identifier: Apache-2.0
 
-#ifndef TINY_POSIX_PLATFORM_SETTINGS_HPP_
-#define TINY_POSIX_PLATFORM_SETTINGS_HPP_
+#ifndef TY_POSIX_PLATFORM_SETTINGS_HPP_
+#define TY_POSIX_PLATFORM_SETTINGS_HPP_
 
 namespace tiny {
 namespace Posix {
@@ -19,4 +19,4 @@ void PlatformSettingsGetSensitiveKeys(tinyInstance *aInstance, const uint16_t **
 } // namespace Posix
 } // namespace tiny
 
-#endif // TINY_POSIX_PLATFORM_SETTINGS_HPP
+#endif // TY_POSIX_PLATFORM_SETTINGS_HPP

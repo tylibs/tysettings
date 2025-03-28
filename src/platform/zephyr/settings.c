@@ -11,11 +11,11 @@
 #include <tiny/platform/toolchain.h>
 
 /* #include <tiny/platform/settings.h> */
-#define CONFIG_TINY_L2_LOG_LEVEL LOG_LEVEL_DBG
-LOG_MODULE_REGISTER(net_tinyPlat_settings, CONFIG_TINY_L2_LOG_LEVEL);
+#define CONFIG_TY_L2_LOG_LEVEL LOG_LEVEL_DBG
+LOG_MODULE_REGISTER(net_tyPlat_settings, CONFIG_TY_L2_LOG_LEVEL);
 
-#define TINY_SETTINGS_ROTINY_KEY "tiny"
-#define TINY_SETTINGS_MAX_PATH_LEN 32
+#define TY_SETTINGS_ROTY_KEY "tiny"
+#define TY_SETTINGS_MAX_PATH_LEN 32
 
 struct tiny_setting_delete_ctx
 {
@@ -40,7 +40,7 @@ struct tiny_setting_delete_ctx
 static int tiny_setting_delete_cb(const char *key, size_t len, settings_read_cb read_cb, void *cb_arg, void *param)
 {
     int                             ret;
-    char                            path[TINY_SETTINGS_MAX_PATH_LEN];
+    char                            path[TY_SETTINGS_MAX_PATH_LEN];
     struct tiny_setting_delete_ctx *ctx = (struct tiny_setting_delete_ctx *)param;
 
     ARG_UNUSED(len);
@@ -86,7 +86,7 @@ static int tiny_setting_delete_cb(const char *key, size_t len, settings_read_cb 
 static int tiny_setting_delete_subtree(int key, int index, bool delete_subtree_root)
 {
     int                            ret;
-    char                           subtree[TINY_SETTINGS_MAX_PATH_LEN];
+    char                           subtree[TY_SETTINGS_MAX_PATH_LEN];
     struct tiny_setting_delete_ctx delete_ctx = {
         .subtree             = subtree,
         .status              = -ENOENT,
@@ -96,11 +96,11 @@ static int tiny_setting_delete_subtree(int key, int index, bool delete_subtree_r
 
     if (key == -1)
     {
-        ret = snprintk(subtree, sizeof(subtree), "%s", TINY_SETTINGS_ROTINY_KEY);
+        ret = snprintk(subtree, sizeof(subtree), "%s", TY_SETTINGS_ROTY_KEY);
     }
     else
     {
-        ret = snprintk(subtree, sizeof(subtree), "%s/%x", TINY_SETTINGS_ROTINY_KEY, key);
+        ret = snprintk(subtree, sizeof(subtree), "%s/%x", TY_SETTINGS_ROTY_KEY, key);
     }
     __ASSERT(ret < sizeof(subtree), "Setting path buffer too small.");
 
@@ -205,7 +205,7 @@ out:
 
 /* Tiny APIs */
 
-void tinyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKeys, uint16_t aSensitiveKeysLength)
+void tyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKeys, uint16_t aSensitiveKeysLength)
 {
     int ret;
 
@@ -220,14 +220,10 @@ void tinyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKey
     }
 }
 
-tinyError tinyPlatSettingsGet(tinyInstance *aInstance,
-                              uint16_t      aKey,
-                              int           aIndex,
-                              uint8_t      *aValue,
-                              uint16_t     *aValueLength)
+tinyError tyPlatSettingsGet(tinyInstance *aInstance, uint16_t aKey, int aIndex, uint8_t *aValue, uint16_t *aValueLength)
 {
     int                          ret;
-    char                         path[TINY_SETTINGS_MAX_PATH_LEN];
+    char                         path[TY_SETTINGS_MAX_PATH_LEN];
     struct tiny_setting_read_ctx read_ctx = {
         .value = aValue, .length = (uint16_t *)aValueLength, .status = -ENOENT, .target_index = aIndex};
 
@@ -235,7 +231,7 @@ tinyError tinyPlatSettingsGet(tinyInstance *aInstance,
 
     LOG_DBG("%s Entry aKey %u aIndex %d", __func__, aKey, aIndex);
 
-    ret = snprintk(path, sizeof(path), "%s/%x", TINY_SETTINGS_ROTINY_KEY, aKey);
+    ret = snprintk(path, sizeof(path), "%s/%x", TY_SETTINGS_ROTY_KEY, aKey);
     __ASSERT(ret < sizeof(path), "Setting path buffer too small.");
 
     ret = settings_load_subtree_direct(path, tiny_setting_read_cb, &read_ctx);
@@ -247,16 +243,16 @@ tinyError tinyPlatSettingsGet(tinyInstance *aInstance,
     if (read_ctx.status != 0)
     {
         LOG_DBG("aKey %u aIndex %d not found", aKey, aIndex);
-        return TINY_ERROR_NOT_FOUND;
+        return TY_ERROR_NOT_FOUND;
     }
 
-    return TINY_ERROR_NONE;
+    return TY_ERROR_NONE;
 }
 
-tinyError tinyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
+tinyError tyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
 {
     int  ret;
-    char path[TINY_SETTINGS_MAX_PATH_LEN];
+    char path[TY_SETTINGS_MAX_PATH_LEN];
 
     ARG_UNUSED(aInstance);
 
@@ -264,23 +260,23 @@ tinyError tinyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint
 
     (void)tiny_setting_delete_subtree(aKey, -1, false);
 
-    ret = snprintk(path, sizeof(path), "%s/%x", TINY_SETTINGS_ROTINY_KEY, aKey);
+    ret = snprintk(path, sizeof(path), "%s/%x", TY_SETTINGS_ROTY_KEY, aKey);
     __ASSERT(ret < sizeof(path), "Setting path buffer too small.");
 
     ret = settings_save_one(path, aValue, aValueLength);
     if (ret != 0)
     {
         LOG_ERR("Failed to store setting %d, ret %d", aKey, ret);
-        return TINY_ERROR_NO_BUFS;
+        return TY_ERROR_NO_BUFS;
     }
 
-    return TINY_ERROR_NONE;
+    return TY_ERROR_NONE;
 }
 
-tinyError tinyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
+tinyError tyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
 {
     int  ret;
-    char path[TINY_SETTINGS_MAX_PATH_LEN];
+    char path[TY_SETTINGS_MAX_PATH_LEN];
 
     ARG_UNUSED(aInstance);
 
@@ -288,7 +284,7 @@ tinyError tinyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint
 
     do
     {
-        ret = snprintk(path, sizeof(path), "%s/%x/%08x", TINY_SETTINGS_ROTINY_KEY, aKey, sys_rand32_get());
+        ret = snprintk(path, sizeof(path), "%s/%x/%08x", TY_SETTINGS_ROTY_KEY, aKey, sys_rand32_get());
         __ASSERT(ret < sizeof(path), "Setting path buffer too small.");
     } while (tiny_setting_exists(path));
 
@@ -296,13 +292,13 @@ tinyError tinyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint
     if (ret != 0)
     {
         LOG_ERR("Failed to store setting %d, ret %d", aKey, ret);
-        return TINY_ERROR_NO_BUFS;
+        return TY_ERROR_NO_BUFS;
     }
 
-    return TINY_ERROR_NONE;
+    return TY_ERROR_NONE;
 }
 
-tinyError tinyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIndex)
+tinyError tyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIndex)
 {
     int ret;
 
@@ -314,20 +310,20 @@ tinyError tinyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIn
     if (ret != 0)
     {
         LOG_DBG("Entry not found aKey %u aIndex %d", aKey, aIndex);
-        return TINY_ERROR_NOT_FOUND;
+        return TY_ERROR_NOT_FOUND;
     }
 
-    return TINY_ERROR_NONE;
+    return TY_ERROR_NONE;
 }
 
-void tinyPlatSettingsWipe(tinyInstance *aInstance)
+void tyPlatSettingsWipe(tinyInstance *aInstance)
 {
     ARG_UNUSED(aInstance);
 
     (void)tiny_setting_delete_subtree(-1, -1, true);
 }
 
-void tinyPlatSettingsDeinit(tinyInstance *aInstance)
+void tyPlatSettingsDeinit(tinyInstance *aInstance)
 {
     ARG_UNUSED(aInstance);
 }

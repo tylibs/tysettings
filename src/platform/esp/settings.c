@@ -10,16 +10,16 @@
 #include <string.h>
 #include <tiny/instance.h>
 
-#define TINY_NAMESPACE "tiny"
-#define TINY_PART_NAME s_storage_name
-#define TINY_KEY_PATTERN "TS%02x"
-#define TINY_KEY_INDEX_PATTERN "TS%02x%02x"
-#define TINY_KEY_PATTERN_LEN 5
-#define TINY_KEY_INDEX_PATTERN_LEN 7
+#define TY_NAMESPACE "tiny"
+#define TY_PART_NAME s_storage_name
+#define TY_KEY_PATTERN "TS%02x"
+#define TY_KEY_INDEX_PATTERN "TS%02x%02x"
+#define TY_KEY_PATTERN_LEN 5
+#define TY_KEY_INDEX_PATTERN_LEN 7
 static nvs_handle_t s_ot_nvs_handle;
 static const char  *s_storage_name;
 
-const char *TINY_PLAT_LOG_TAG = "settings";
+const char *TY_PLAT_LOG_TAG = "settings";
 
 void esp_openthread_set_storage_name(const char *name)
 {
@@ -28,24 +28,24 @@ void esp_openthread_set_storage_name(const char *name)
 
 static esp_err_t get_next_empty_index(uint16_t aKey, uint8_t *index)
 {
-    ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), ESP_ERR_INVALID_STATE, TINY_PLAT_LOG_TAG, "OT NVS handle is invalid.");
-    esp_err_t               ret                                    = ESP_OK;
-    static volatile uint8_t s_unused_pos                           = 0;
-    char                    ot_nvs_key[TINY_KEY_INDEX_PATTERN_LEN] = {0};
-    nvs_iterator_t          nvs_it                                 = NULL;
-    bool                    found                                  = false;
+    ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), ESP_ERR_INVALID_STATE, TY_PLAT_LOG_TAG, "OT NVS handle is invalid.");
+    esp_err_t               ret                                  = ESP_OK;
+    static volatile uint8_t s_unused_pos                         = 0;
+    char                    ot_nvs_key[TY_KEY_INDEX_PATTERN_LEN] = {0};
+    nvs_iterator_t          nvs_it                               = NULL;
+    bool                    found                                = false;
 
     for (uint8_t i = 0; i != UINT8_MAX; i++)
     {
         s_unused_pos++;
         found = false;
-        snprintf(ot_nvs_key, sizeof(ot_nvs_key), TINY_KEY_INDEX_PATTERN, (uint8_t)aKey, s_unused_pos);
-        ret = nvs_entry_find(TINY_PART_NAME, TINY_NAMESPACE, NVS_TYPE_BLOB, &nvs_it);
+        snprintf(ot_nvs_key, sizeof(ot_nvs_key), TY_KEY_INDEX_PATTERN, (uint8_t)aKey, s_unused_pos);
+        ret = nvs_entry_find(TY_PART_NAME, TY_NAMESPACE, NVS_TYPE_BLOB, &nvs_it);
         while (ret == ESP_OK)
         {
             nvs_entry_info_t info;
             nvs_entry_info(nvs_it, &info);
-            if (memcmp(ot_nvs_key, info.key, TINY_KEY_INDEX_PATTERN_LEN - 1) == 0)
+            if (memcmp(ot_nvs_key, info.key, TY_KEY_INDEX_PATTERN_LEN - 1) == 0)
             {
                 found = true;
                 break;
@@ -66,25 +66,25 @@ static esp_err_t get_next_empty_index(uint16_t aKey, uint8_t *index)
 
 static esp_err_t find_target_key_using_index(uint16_t aKey, int aIndex, char *key, size_t key_len)
 {
-    /* ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), ESP_ERR_INVALID_STATE, TINY_PLAT_LOG_TAG, "OT NVS handle is
+    /* ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), ESP_ERR_INVALID_STATE, TY_PLAT_LOG_TAG, "OT NVS handle is
      * invalid.");
      */
-    esp_err_t      ret                              = ESP_OK;
-    nvs_iterator_t nvs_it                           = NULL;
-    int            cur_index                        = 0;
-    char           ot_nvs_key[TINY_KEY_PATTERN_LEN] = {0};
+    esp_err_t      ret                            = ESP_OK;
+    nvs_iterator_t nvs_it                         = NULL;
+    int            cur_index                      = 0;
+    char           ot_nvs_key[TY_KEY_PATTERN_LEN] = {0};
 
-    ret = nvs_entry_find(TINY_PART_NAME, TINY_NAMESPACE, NVS_TYPE_BLOB, &nvs_it);
+    ret = nvs_entry_find(TY_PART_NAME, TY_NAMESPACE, NVS_TYPE_BLOB, &nvs_it);
     if (ret != ESP_OK)
     {
         return ret;
     }
-    snprintf(ot_nvs_key, sizeof(ot_nvs_key), TINY_KEY_PATTERN, (uint8_t)aKey);
+    snprintf(ot_nvs_key, sizeof(ot_nvs_key), TY_KEY_PATTERN, (uint8_t)aKey);
     while (ret == ESP_OK)
     {
         nvs_entry_info_t info;
         nvs_entry_info(nvs_it, &info);
-        if (memcmp(ot_nvs_key, info.key, TINY_KEY_PATTERN_LEN - 1) == 0)
+        if (memcmp(ot_nvs_key, info.key, TY_KEY_PATTERN_LEN - 1) == 0)
         {
             if (cur_index == aIndex)
             {
@@ -109,26 +109,26 @@ static esp_err_t find_target_key_using_index(uint16_t aKey, int aIndex, char *ke
 
 static esp_err_t erase_all_key(uint16_t aKey)
 {
-    /* ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), ESP_ERR_INVALID_STATE, TINY_PLAT_LOG_TAG, "OT NVS handle is
+    /* ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), ESP_ERR_INVALID_STATE, TY_PLAT_LOG_TAG, "OT NVS handle is
      * invalid.");
      */
-    esp_err_t      ret                              = ESP_OK;
-    nvs_iterator_t nvs_it                           = NULL;
-    char           ot_nvs_key[TINY_KEY_PATTERN_LEN] = {0};
+    esp_err_t      ret                            = ESP_OK;
+    nvs_iterator_t nvs_it                         = NULL;
+    char           ot_nvs_key[TY_KEY_PATTERN_LEN] = {0};
 
-    ret = nvs_entry_find(TINY_PART_NAME, TINY_NAMESPACE, NVS_TYPE_BLOB, &nvs_it);
+    ret = nvs_entry_find(TY_PART_NAME, TY_NAMESPACE, NVS_TYPE_BLOB, &nvs_it);
     if (ret == ESP_ERR_NVS_NOT_FOUND)
     {
         return ESP_OK;
     }
-    /* ESP_RETURN_ON_FALSE((ret == ESP_OK && nvs_it != NULL), ESP_FAIL, TINY_PLAT_LOG_TAG, */
+    /* ESP_RETURN_ON_FALSE((ret == ESP_OK && nvs_it != NULL), ESP_FAIL, TY_PLAT_LOG_TAG, */
     /*                     "Can not find any data in nvs flash, err: %d", ret); */
     while (ret == ESP_OK)
     {
-        snprintf(ot_nvs_key, sizeof(ot_nvs_key), TINY_KEY_PATTERN, (uint8_t)aKey);
+        snprintf(ot_nvs_key, sizeof(ot_nvs_key), TY_KEY_PATTERN, (uint8_t)aKey);
         nvs_entry_info_t info;
         nvs_entry_info(nvs_it, &info);
-        if (memcmp(ot_nvs_key, info.key, TINY_KEY_PATTERN_LEN - 1) == 0)
+        if (memcmp(ot_nvs_key, info.key, TY_KEY_PATTERN_LEN - 1) == 0)
         {
             ret = nvs_erase_key(s_ot_nvs_handle, info.key);
             if (ret != ESP_OK)
@@ -147,17 +147,17 @@ static esp_err_t erase_all_key(uint16_t aKey)
     return ESP_OK;
 }
 
-void tinyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKeys, uint16_t aSensitiveKeysLength)
+void tyPlatSettingsInit(tinyInstance *aInstance, const uint16_t *aSensitiveKeys, uint16_t aSensitiveKeysLength)
 {
-    esp_err_t err = nvs_open(TINY_NAMESPACE, NVS_READWRITE, &s_ot_nvs_handle);
+    esp_err_t err = nvs_open(TY_NAMESPACE, NVS_READWRITE, &s_ot_nvs_handle);
     if (err != ESP_OK)
     {
-        ESP_LOGE(TINY_PLAT_LOG_TAG, "Failed to open NVS namespace (0x%x)", err);
+        ESP_LOGE(TY_PLAT_LOG_TAG, "Failed to open NVS namespace (0x%x)", err);
         assert(0);
     }
 }
 
-void tinyPlatSettingsDeinit(tinyInstance *aInstance)
+void tyPlatSettingsDeinit(tinyInstance *aInstance)
 {
     if (s_ot_nvs_handle != 0)
     {
@@ -165,64 +165,58 @@ void tinyPlatSettingsDeinit(tinyInstance *aInstance)
     }
 }
 
-tinyError tinyPlatSettingsGet(tinyInstance *aInstance,
-                              uint16_t      aKey,
-                              int           aIndex,
-                              uint8_t      *aValue,
-                              uint16_t     *aValueLength)
+tinyError tyPlatSettingsGet(tinyInstance *aInstance, uint16_t aKey, int aIndex, uint8_t *aValue, uint16_t *aValueLength)
 {
-    ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), TINY_ERROR_NOT_FOUND, TINY_PLAT_LOG_TAG, "OT NVS handle is invalid.");
-    esp_err_t ret                                    = ESP_OK;
-    char      ot_nvs_key[TINY_KEY_INDEX_PATTERN_LEN] = {0};
+    ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), TY_ERROR_NOT_FOUND, TY_PLAT_LOG_TAG, "OT NVS handle is invalid.");
+    esp_err_t ret                                  = ESP_OK;
+    char      ot_nvs_key[TY_KEY_INDEX_PATTERN_LEN] = {0};
 
-    ret = find_target_key_using_index(aKey, aIndex, ot_nvs_key, TINY_KEY_INDEX_PATTERN_LEN);
+    ret = find_target_key_using_index(aKey, aIndex, ot_nvs_key, TY_KEY_INDEX_PATTERN_LEN);
     if (ret != ESP_OK)
     {
-        return TINY_ERROR_NOT_FOUND;
+        return TY_ERROR_NOT_FOUND;
     }
     size_t length = *aValueLength;
     ret           = nvs_get_blob(s_ot_nvs_handle, ot_nvs_key, aValue, &length);
     *aValueLength = (uint16_t)length;
-    ESP_RETURN_ON_FALSE((ret == ESP_OK), TINY_ERROR_NOT_FOUND, TINY_PLAT_LOG_TAG, "Data not found, err: %d", ret);
-    return TINY_ERROR_NONE;
+    ESP_RETURN_ON_FALSE((ret == ESP_OK), TY_ERROR_NOT_FOUND, TY_PLAT_LOG_TAG, "Data not found, err: %d", ret);
+    return TY_ERROR_NONE;
 }
 
-tinyError tinyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
+tinyError tyPlatSettingsSet(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
 {
-    ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), TINY_ERROR_NOT_FOUND, TINY_PLAT_LOG_TAG, "OT NVS handle is invalid.");
-    esp_err_t ret                                    = ESP_OK;
-    char      ot_nvs_key[TINY_KEY_INDEX_PATTERN_LEN] = {0};
+    ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), TY_ERROR_NOT_FOUND, TY_PLAT_LOG_TAG, "OT NVS handle is invalid.");
+    esp_err_t ret                                  = ESP_OK;
+    char      ot_nvs_key[TY_KEY_INDEX_PATTERN_LEN] = {0};
 
-    snprintf(ot_nvs_key, sizeof(ot_nvs_key), TINY_KEY_INDEX_PATTERN, (uint8_t)aKey, 0);
+    snprintf(ot_nvs_key, sizeof(ot_nvs_key), TY_KEY_INDEX_PATTERN, (uint8_t)aKey, 0);
     ret = nvs_set_blob(s_ot_nvs_handle, ot_nvs_key, aValue, aValueLength);
-    ESP_RETURN_ON_FALSE((ret == ESP_OK), TINY_ERROR_NO_BUFS, TINY_PLAT_LOG_TAG, "No buffers, err: %d", ret);
+    ESP_RETURN_ON_FALSE((ret == ESP_OK), TY_ERROR_NO_BUFS, TY_PLAT_LOG_TAG, "No buffers, err: %d", ret);
     ret = nvs_commit(s_ot_nvs_handle);
-    ESP_RETURN_ON_FALSE((ret == ESP_OK), TINY_ERROR_NO_BUFS, TINY_PLAT_LOG_TAG, "OT NVS handle shut down, err: %d",
-                        ret);
-    return TINY_ERROR_NONE;
+    ESP_RETURN_ON_FALSE((ret == ESP_OK), TY_ERROR_NO_BUFS, TY_PLAT_LOG_TAG, "OT NVS handle shut down, err: %d", ret);
+    return TY_ERROR_NONE;
 }
 
-tinyError tinyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
+tinyError tyPlatSettingsAdd(tinyInstance *aInstance, uint16_t aKey, const uint8_t *aValue, uint16_t aValueLength)
 {
-    ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), TINY_ERROR_NOT_FOUND, TINY_PLAT_LOG_TAG, "OT NVS handle is invalid.");
+    ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), TY_ERROR_NOT_FOUND, TY_PLAT_LOG_TAG, "OT NVS handle is invalid.");
     esp_err_t ret = ESP_OK;
     uint8_t   unused_pos;
-    char      ot_nvs_key[TINY_KEY_INDEX_PATTERN_LEN] = {0};
+    char      ot_nvs_key[TY_KEY_INDEX_PATTERN_LEN] = {0};
 
     ret = get_next_empty_index(aKey, &unused_pos);
-    ESP_RETURN_ON_FALSE((ret == ESP_OK), TINY_ERROR_NO_BUFS, TINY_PLAT_LOG_TAG, "No buffers, err: %d", ret);
-    snprintf(ot_nvs_key, sizeof(ot_nvs_key), TINY_KEY_INDEX_PATTERN, (uint8_t)aKey, unused_pos);
+    ESP_RETURN_ON_FALSE((ret == ESP_OK), TY_ERROR_NO_BUFS, TY_PLAT_LOG_TAG, "No buffers, err: %d", ret);
+    snprintf(ot_nvs_key, sizeof(ot_nvs_key), TY_KEY_INDEX_PATTERN, (uint8_t)aKey, unused_pos);
     ret = nvs_set_blob(s_ot_nvs_handle, ot_nvs_key, aValue, aValueLength);
-    ESP_RETURN_ON_FALSE((ret == ESP_OK), TINY_ERROR_NO_BUFS, TINY_PLAT_LOG_TAG, "No buffers, err: %d", ret);
+    ESP_RETURN_ON_FALSE((ret == ESP_OK), TY_ERROR_NO_BUFS, TY_PLAT_LOG_TAG, "No buffers, err: %d", ret);
     ret = nvs_commit(s_ot_nvs_handle);
-    ESP_RETURN_ON_FALSE((ret == ESP_OK), TINY_ERROR_NO_BUFS, TINY_PLAT_LOG_TAG, "OT NVS handle shut down, err: %d",
-                        ret);
-    return TINY_ERROR_NONE;
+    ESP_RETURN_ON_FALSE((ret == ESP_OK), TY_ERROR_NO_BUFS, TY_PLAT_LOG_TAG, "OT NVS handle shut down, err: %d", ret);
+    return TY_ERROR_NONE;
 }
 
-tinyError tinyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIndex)
+tinyError tyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIndex)
 {
-    /* ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), TINY_ERROR_NOT_FOUND, TINY_PLAT_LOG_TAG, "OT NVS handle is
+    /* ESP_RETURN_ON_FALSE((s_ot_nvs_handle != 0), TY_ERROR_NOT_FOUND, TY_PLAT_LOG_TAG, "OT NVS handle is
      * invalid.");
      */
     esp_err_t ret = ESP_OK;
@@ -233,19 +227,19 @@ tinyError tinyPlatSettingsDelete(tinyInstance *aInstance, uint16_t aKey, int aIn
     }
     else
     {
-        char ot_nvs_key[TINY_KEY_INDEX_PATTERN_LEN] = {0};
-        ret = find_target_key_using_index(aKey, aIndex, ot_nvs_key, TINY_KEY_INDEX_PATTERN_LEN);
+        char ot_nvs_key[TY_KEY_INDEX_PATTERN_LEN] = {0};
+        ret = find_target_key_using_index(aKey, aIndex, ot_nvs_key, TY_KEY_INDEX_PATTERN_LEN);
         if (ret != ESP_OK)
         {
-            return TINY_ERROR_NOT_FOUND;
+            return TY_ERROR_NOT_FOUND;
         }
         ret = nvs_erase_key(s_ot_nvs_handle, ot_nvs_key);
         nvs_commit(s_ot_nvs_handle);
     }
-    return TINY_ERROR_NONE;
+    return TY_ERROR_NONE;
 }
 
-void tinyPlatSettingsWipe(tinyInstance *aInstance)
+void tyPlatSettingsWipe(tinyInstance *aInstance)
 {
     nvs_erase_all(s_ot_nvs_handle);
 }

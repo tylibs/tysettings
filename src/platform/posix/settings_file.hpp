@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: Copyright 2025 Clever Design (Switzerland) GmbH
 // SPDX-License-Identifier: Apache-2.0
 
-#ifndef TINY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
-#define TINY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
+#ifndef TY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
+#define TY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
 
 #include <tiny/tiny-core-config.h>
 
@@ -22,8 +22,8 @@ public:
      *
      * @param[in]  aSettingsFileBaseName    A pointer to the base name of the settings file.
      *
-     * @retval TINY_ERROR_NONE    The given settings file was initialized successfully.
-     * @retval TINY_ERROR_PARSE   The key-value format could not be parsed (invalid format).
+     * @retval TY_ERROR_NONE    The given settings file was initialized successfully.
+     * @retval TY_ERROR_PARSE   The key-value format could not be parsed (invalid format).
      */
     tinyError Init(const char *aSettingsFileBaseName);
 
@@ -40,8 +40,8 @@ public:
      * @param[out]     aValue        A pointer to where the value of the setting should be written.
      * @param[in,out]  aValueLength  A pointer to the length of the value.
      *
-     * @retval TINY_ERROR_NONE        The given setting was found and fetched successfully.
-     * @retval TINY_ERROR_NTINY_FOUND   The given key or index was not found in the setting store.
+     * @retval TY_ERROR_NONE        The given setting was found and fetched successfully.
+     * @retval TY_ERROR_NTY_FOUND   The given key or index was not found in the setting store.
      */
     tinyError Get(uint16_t aKey, int aIndex, uint8_t *aValue, uint16_t *aValueLength);
 
@@ -70,8 +70,8 @@ public:
      * @param[in]  aIndex     The index of the value to be removed. If set to -1, all values for this aKey will be
      *                        removed.
      *
-     * @retval TINY_ERROR_NONE        The given key and index was found and removed successfully.
-     * @retval TINY_ERROR_NTINY_FOUND   The given key or index was not found in the setting store.
+     * @retval TY_ERROR_NONE        The given key and index was found and removed successfully.
+     * @retval TY_ERROR_NTY_FOUND   The given key or index was not found in the setting store.
      */
     tinyError Delete(uint16_t aKey, int aIndex);
 
@@ -81,7 +81,7 @@ public:
     void Wipe(void);
 
 private:
-    static const size_t kMaxFileDirectorySize   = sizeof(TINY_CONFIG_POSIX_SETTINGS_PATH);
+    static const size_t kMaxFileDirectorySize   = sizeof(TY_CONFIG_POSIX_SETTINGS_PATH);
     static const size_t kSlashLength            = 1;
     static const size_t kMaxFileBaseNameSize    = 64;
     static const size_t kMaxFileExtensionLength = 5; ///< The length of `.Swap` or `.data`.
@@ -102,4 +102,4 @@ private:
 } // namespace Posix
 } // namespace tiny
 
-#endif // TINY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
+#endif // TY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
