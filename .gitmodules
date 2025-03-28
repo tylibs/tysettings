@@ -1,3 +1,3 @@
-[submodule "lib/tinycommon"]
-	path = lib/tinycommon
-	url = git@github.com:tinybus/tinycommon.git
+[submodule "lib/tycommon"]
+	path = lib/tycommon
+	url = git@github.com:tylibs/tycommon.git
