@@ -7,8 +7,8 @@
  *   TySettings simplest example: Hello World
  */
 
-#include <tiny/logging.h>
-#include <tiny/platform/toolchain.h>
+#include <ty/logging.h>
+#include <ty/platform/toolchain.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include "tysettings/platform/settings.h"

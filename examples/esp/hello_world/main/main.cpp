@@ -10,8 +10,8 @@
 #include <esp_log.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-#include <tiny/logging.h>
-#include <tiny/platform/toolchain.h>
+#include <ty/logging.h>
+#include <ty/platform/toolchain.h>
 #include <tysettings/platform/settings.h>
 
 #include <nvs_flash.h>

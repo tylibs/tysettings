@@ -6,11 +6,11 @@
 #include <zephyr/random/random.h>
 #include <zephyr/settings/settings.h>
 
-#include <tiny/error.h>
-#include <tiny/instance.h>
-#include <tiny/platform/toolchain.h>
+#include <ty/error.h>
+#include <ty/instance.h>
+#include <ty/platform/toolchain.h>
 
-/* #include <tiny/platform/settings.h> */
+/* #include <ty/platform/settings.h> */
 #define CONFIG_TY_L2_LOG_LEVEL LOG_LEVEL_DBG
 LOG_MODULE_REGISTER(net_tyPlat_settings, CONFIG_TY_L2_LOG_LEVEL);
 

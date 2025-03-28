@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <tiny/instance.h>
+#include <ty/instance.h>
 
 #define TY_NAMESPACE "tiny"
 #define TY_PART_NAME s_storage_name

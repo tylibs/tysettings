@@ -9,8 +9,8 @@
 
 #include <pthread.h>
 #include <stdio.h>
-#include <tiny/instance.h>
-#include <tiny/logging.h>
+#include <ty/instance.h>
+#include <ty/logging.h>
 #include <unistd.h>
 #include "tysettings/platform/settings.h"
 

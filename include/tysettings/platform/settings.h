@@ -10,7 +10,7 @@
 #ifndef TYSETTINGS_SETTINGS_H
 #define TYSETTINGS_SETTINGS_H
 
-#include <tiny/instance.h>
+#include <ty/instance.h>
 
 #ifdef __cplusplus
 extern "C" {

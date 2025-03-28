@@ -4,7 +4,7 @@
 #ifndef TY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
 #define TY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
 
-#include <tiny/tiny-core-config.h>
+#include <ty/ty-core-config.h>
 
 namespace tiny {
 namespace Posix {

@@ -14,21 +14,21 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <tiny/common/debug.hpp>
-#include <tiny/logging.h>
-#include <tiny/platform/exit_code.h>
-// #include <tiny/platform/misc.h>
-// #include <tiny/platform/radio.h>
+#include <ty/common/debug.hpp>
+#include <ty/logging.h>
+#include <ty/platform/exit_code.h>
+// #include <ty/platform/misc.h>
+// #include <ty/platform/radio.h>
 
 #include <tysettings/platform/settings.h>
 #if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
-#include <tiny/platform/secure_settings.h>
+#include <ty/platform/secure_settings.h>
 #endif
 
 #include "settings.hpp"
 #include "settings_file.hpp"
-#include "tiny/common/code_utils.hpp"
-// #include "tiny/common/encoding.hpp"
+#include "ty/common/code_utils.hpp"
+// #include "ty/common/encoding.hpp"
 
 // #include "system.hpp"
 
