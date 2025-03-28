@@ -20,7 +20,7 @@
 
 #include "settings_file.hpp"
 
-namespace tiny {
+namespace ty {
 namespace Posix {
 
 tinyError SettingsFile::Init(const char *aSettingsFileBaseName)
@@ -347,4 +347,4 @@ void SettingsFile::SwapDiscard(int aFd)
 }
 
 } // namespace Posix
-} // namespace tiny
+} // namespace ty

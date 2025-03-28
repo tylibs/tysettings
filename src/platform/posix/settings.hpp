@@ -4,7 +4,7 @@
 #ifndef TY_POSIX_PLATFORM_SETTINGS_HPP_
 #define TY_POSIX_PLATFORM_SETTINGS_HPP_
 
-namespace tiny {
+namespace ty {
 namespace Posix {
 
 /**
@@ -17,6 +17,6 @@ namespace Posix {
 void PlatformSettingsGetSensitiveKeys(tinyInstance *aInstance, const uint16_t **aKeys, uint16_t *aKeysLength);
 
 } // namespace Posix
-} // namespace tiny
+} // namespace ty
 
 #endif // TY_POSIX_PLATFORM_SETTINGS_HPP

@@ -32,7 +32,7 @@
 
 // #include "system.hpp"
 
-static tiny::Posix::SettingsFile sSettingsFile;
+static ty::Posix::SettingsFile sSettingsFile;
 
 #if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
 static const uint16_t *sSensitiveKeys       = nullptr;
@@ -62,7 +62,7 @@ static tinyError settingsFileInit(tinyInstance *aInstance)
     uint64_t                nodeId;
 
     // tyPlatRadioGetIeeeEui64(aInstance, reinterpret_cast<uint8_t *>(&nodeId));
-    // nodeId = tiny::BigEndian::HostSwap64(nodeId);
+    // nodeId = ty::BigEndian::HostSwap64(nodeId);
     nodeId = 0x1234567890abcdef;
     snprintf(fileBaseName, sizeof(fileBaseName), "%s_%" PRIx64, offset == nullptr ? "0" : offset, nodeId);
     VerifyOrDie(strlen(fileBaseName) < kMaxFileBaseNameSize, TY_EXIT_FAILURE);

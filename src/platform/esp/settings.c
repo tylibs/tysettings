@@ -10,7 +10,7 @@
 #include <string.h>
 #include <ty/instance.h>
 
-#define TY_NAMESPACE "tiny"
+#define TY_NAMESPACE "ty"
 #define TY_PART_NAME s_storage_name
 #define TY_KEY_PATTERN "TS%02x"
 #define TY_KEY_INDEX_PATTERN "TS%02x%02x"

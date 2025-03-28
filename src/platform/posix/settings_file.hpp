@@ -6,7 +6,7 @@
 
 #include <ty/ty-core-config.h>
 
-namespace tiny {
+namespace ty {
 namespace Posix {
 
 class SettingsFile
@@ -100,6 +100,6 @@ private:
 };
 
 } // namespace Posix
-} // namespace tiny
+} // namespace ty
 
 #endif // TY_POSIX_PLATFORM_SETTINGS_FILE_HPP_
