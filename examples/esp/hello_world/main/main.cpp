@@ -4,7 +4,7 @@
 /**
  * @file
  * @brief
- *   TinySettings simplest example: Hello World
+ *   TySettings simplest example: Hello World
  */
 
 #include <esp_log.h>
@@ -12,7 +12,7 @@
 #include <freertos/task.h>
 #include <tiny/logging.h>
 #include <tiny/platform/toolchain.h>
-#include <tinysettings/platform/settings.h>
+#include <tysettings/platform/settings.h>
 
 #include <nvs_flash.h>
 
@@ -36,7 +36,7 @@ AppPersistentSettings mAppPersistentSettings = {1, 2};
 extern "C" void app_main()
 {
     tinyInstance *instance;
-    tyLogInfoPlat("Starting TinySettings example");
+    tyLogInfoPlat("Starting TySettings example");
     // Initialize NVS
 
     esp_err_t ret = nvs_flash_init();

@@ -4,7 +4,7 @@
 /**
  * @file
  * @brief
- *   TinySettings simplest example: Hello World
+ *   TySettings simplest example: Hello World
  */
 
 #include <pthread.h>
@@ -12,7 +12,7 @@
 #include <tiny/instance.h>
 #include <tiny/logging.h>
 #include <unistd.h>
-#include "tinysettings/platform/settings.h"
+#include "tysettings/platform/settings.h"
 
 /*****************************************************************************/
 // just as a hint, but better not to pack, because this object only lives once
@@ -32,7 +32,7 @@ AppPersistentSettings mAppPersistentSettings = {10, 10};
 extern "C" int main(void)
 {
     tinyInstance *instance;
-    tyLogInfoPlat("Starting TinySettings example");
+    tyLogInfoPlat("Starting TySettings example");
     instance = tinyInstanceInitSingle();
     // Initialize the settings subsystem
     tyPlatSettingsInit(instance, NULL, 0);

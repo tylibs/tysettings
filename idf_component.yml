@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 version: 1.0.4
-description: "TinySettings Library - persist global app settings"
+description: "TySettings Library - persist global app settings"
 license: "Apache-2.0"
-repository: "https://github.com/tinybus/tinysettings"
+repository: "https://github.com/tylibs/tysettings"
 dependencies:
   idf: ">=5.0"
   typlatform:

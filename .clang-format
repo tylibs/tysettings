@@ -60,9 +60,9 @@ ForEachMacros:
   - Q_FOREACH
   - BOOST_FOREACH
 IncludeCategories:
-  - Regex:           '^<tinysettings/.*/'
+  - Regex:           '^<tysettings/.*/'
     Priority:        4
-  - Regex:           '^<tinysettings/'
+  - Regex:           '^<tysettings/'
     Priority:        3
   - Regex:           '^<'
     Priority:        2

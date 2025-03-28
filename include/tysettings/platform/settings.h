@@ -7,8 +7,8 @@
  *   Main include for C based applications
  */
 
-#ifndef TINYSETTINGS_SETTINGS_H
-#define TINYSETTINGS_SETTINGS_H
+#ifndef TYSETTINGS_SETTINGS_H
+#define TYSETTINGS_SETTINGS_H
 
 #include <tiny/instance.h>
 
@@ -195,4 +195,4 @@ void tyPlatSettingsWipe(tinyInstance *aInstance);
 } // extern "C"
 #endif
 
-#endif // TINYSETTINGS_SETTINGS_H
+#endif // TYSETTINGS_SETTINGS_H

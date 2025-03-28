@@ -20,7 +20,7 @@
 // #include <tiny/platform/misc.h>
 // #include <tiny/platform/radio.h>
 
-#include <tinysettings/platform/settings.h>
+#include <tysettings/platform/settings.h>
 #if TY_POSIX_CONFIG_SECURE_SETTINGS_ENABLE
 #include <tiny/platform/secure_settings.h>
 #endif

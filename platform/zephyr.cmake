@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-ty_library_named(tinysettings)
+ty_library_named(tysettings)
 ty_library_link_libraries(zephyr_interface)
 ty_library_link_libraries(tiny)
 

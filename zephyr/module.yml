@@ -1,4 +1,4 @@
-name: tinysettings
+name: tysettings
 build:
   cmake: ./
   kconfig: ./Kconfig

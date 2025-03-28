@@ -4,14 +4,14 @@
 /**
  * @file
  * @brief
- *   TinySettings simplest example: Hello World
+ *   TySettings simplest example: Hello World
  */
 
 #include <tiny/logging.h>
 #include <tiny/platform/toolchain.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include "tinysettings/platform/settings.h"
+#include "tysettings/platform/settings.h"
 
 #define LOG_MODULE_NAME main
 LOG_MODULE_REGISTER(main);
@@ -35,7 +35,7 @@ AppPersistentSettings mAppPersistentSettings = {1, 2};
 extern "C" int main(void)
 {
     tinyInstance *instance;
-    tyLogInfoPlat("Starting TinySettings example");
+    tyLogInfoPlat("Starting TySettings example");
 
     instance = tinyInstanceInitSingle();
     // Initialize the settings subsystem

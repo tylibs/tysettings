@@ -1,12 +1,12 @@
-config TINYSETTINGS
-	bool "TinySettings Library"
+config TYSETTINGS
+	bool "TySettings Library"
 	select SETTINGS if ZEPHYR_PLATFORM
 	help
-		This option enables the TinySettings Library
+		This option enables the TySettings Library
 
-if TINYSETTINGS
-menu "TinySettings configuration"
-config TINYSETTINGS_DUALBANK
+if TYSETTINGS
+menu "TySettings configuration"
+config TYSETTINGS_DUALBANK
 	bool "Enable Dualbank"
 	default "y"
 	help
@@ -14,45 +14,45 @@ config TINYSETTINGS_DUALBANK
 		Gives the ability to have two banks of settings.
 		This is useful for having a backup bank of settings.
 
-choice TINYSETTINGS_BACKEND
+choice TYSETTINGS_BACKEND
 	prompt "Storage back-end"
-	default TINYSETTINGS_NVS if NVS
-	default TINYSETTINGS_NONE
+	default TYSETTINGS_NVS if NVS
+	default TYSETTINGS_NONE
 	help
 		Storage back-end to be used by the settings subsystem.
 
-config TINYSETTINGS_NVS
+config TYSETTINGS_NVS
 	bool "NVS non-volatile storage support"
 	depends on NVS
 	help
 		Uses the NVS storage backend.
 
-if TINYSETTINGS_NVS
+if TYSETTINGS_NVS
 
-config TINYSETTINGS_NVS_NAME_CACHE
+config TYSETTINGS_NVS_NAME_CACHE
 	bool "NVS name lookup cache"
 	help
 		Enable NVS name lookup cache, used to reduce the Settings name
 		lookup time.
 
-config TINYSETTINGS_NVS_NAME_CACHE_SIZE
+config TYSETTINGS_NVS_NAME_CACHE_SIZE
 	int "NVS name lookup cache size"
 	default 128
 	range 1 65535
-	depends on TINYSETTINGS_NVS_NAME_CACHE
+	depends on TYSETTINGS_NVS_NAME_CACHE
 	help
 		Number of entries in Settings NVS name cache.
 
-endif # TINYSETTINGS_NVS
+endif # TYSETTINGS_NVS
 
-config TINYSETTINGS_NONE
+config TYSETTINGS_NONE
 	bool "NONE"
 	help
 		No storage back-end.
 
-endchoice # TINYSETTINGS_BACKEND
+endchoice # TYSETTINGS_BACKEND
 
-config TINYSETTINGS_LOG
+config TYSETTINGS_LOG
 	bool "Enable logging"
 	default "y"
 	select LOG_COLORS if ESP_PLATFORM
@@ -60,5 +60,5 @@ config TINYSETTINGS_LOG
 	help
 		Selects whether logging messages.
 
-endmenu # TinySettings configuration
-endif # TINYSETTINGS
+endmenu # TySettings configuration
+endif # TYSETTINGS

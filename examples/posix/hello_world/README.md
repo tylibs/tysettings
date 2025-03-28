@@ -1,7 +1,7 @@
 # Nonsense Hello World Logger  
 
 This is a **rather nonsense example** that logs `"Hello World"` to the console.  
-Why? Because we can 🚀 —and because it demonstrates the basic usage of TinySettings.  
+Why? Because we can 🚀 —and because it demonstrates the basic usage of TySettings.  
 
 ## Running the Example  
 
@@ -36,11 +36,11 @@ static const StateTableRow stateTable[] = {{
 
 // Implement Action
 static void onHelloWorld(Event *apEvent) {
-  ESP_LOGI(TAG, "Action onHelloWorld() called from TinySettings");
+  ESP_LOGI(TAG, "Action onHelloWorld() called from TySettings");
 }
 
 void app_main() {
-  ESP_LOGI(TAG, "Subscribe module '%s' to TinySettings", TAG);
+  ESP_LOGI(TAG, "Subscribe module '%s' to TySettings", TAG);
   tb_subscribe(TB_SUBSCRIBER(TAG, stateTable, TB_TABLE_ROW_COUNT(stateTable)));
 
   while (true) {

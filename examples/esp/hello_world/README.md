@@ -1,7 +1,7 @@
 # Nonsense Hello World Logger  
 
 This is a **rather nonsense example** that logs `"Hello World"` to the console.  
-Why? Because we can 🚀 —and because it demonstrates the basic usage of TinySettings.  
+Why? Because we can 🚀 —and because it demonstrates the basic usage of TySettings.  
 
 ## Running the Example  
 
@@ -36,22 +36,22 @@ static const StateTableRow stateTable[] = {{
 
 /*****************************************************************************/
 // Implement the Actions
-static void onHelloWorld(const Event *aEvent) { ESP_LOGI(TAG, "Action onHelloWorld() called from TinySettings"); }
+static void onHelloWorld(const Event *aEvent) { ESP_LOGI(TAG, "Action onHelloWorld() called from TySettings"); }
 
 void app_main()
 {
-    // Subscribe to the TinySettings using the state table. This registers the module
+    // Subscribe to the TySettings using the state table. This registers the module
     // to receive and process events according to the defined rules.
-    ESP_LOGI(TAG, "Subscribe module '%s' to TinySettings", TAG);
+    ESP_LOGI(TAG, "Subscribe module '%s' to TySettings", TAG);
     tbSubscribe(TB_SUBSCRIBER(TAG, stateTable, TB_TABLE_ROW_COUNT(stateTable), MAIN_STATE_START));
 
     while (true)
     {
         ESP_LOGI(TAG, "Publish HELLO_WORLD event");
-        // Publish the HELLO_WORLD event.  The TinySettings will then look up this
+        // Publish the HELLO_WORLD event.  The TySettings will then look up this
         // event in the state table and execute the corresponding action
         // (onHelloWorld in this case).  The NULL and 0 arguments indicate no data
-        // is being sent with the event.    // publish an event to the TinySettings
+        // is being sent with the event.    // publish an event to the TySettings
         tbPublish(TB_EVENT(MAIN_EVENT_HELLO_WORLD, NULL, 0));
 
         // next event in 1 second
