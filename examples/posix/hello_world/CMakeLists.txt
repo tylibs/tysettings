@@ -8,8 +8,8 @@ set(CONFIG_TY_LOG_LEVEL TY_LOG_LEVEL_INFO)
 project(hello_world)
 
 set(PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
-# Include tinyplatform
-add_subdirectory(${PROJECT_DIR}/../tinyplatform ${PROJECT_DIR}/build/tiny)
+# Include typlatform
+add_subdirectory(${PROJECT_DIR}/../typlatform ${PROJECT_DIR}/build/tiny)
 # https://cmake.org/pipermail/cmake/2019-June/069547.html
 add_subdirectory(${PROJECT_DIR} ${PROJECT_DIR}/build/tinysettings)
 

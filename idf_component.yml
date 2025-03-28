@@ -7,9 +7,9 @@ license: "Apache-2.0"
 repository: "https://github.com/tinybus/tinysettings"
 dependencies:
   idf: ">=5.0"
-  tinyplatform:
+  typlatform:
     version: ">=1.0"
-    path: ../tinyplatform
+    path: ../typlatform
 files:
   exclude:
     - "docs"

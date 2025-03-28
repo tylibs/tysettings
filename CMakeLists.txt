@@ -13,8 +13,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR})
-set(TINYCOMMON_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/tinycommon)
-set(CMAKE_MODULE_PATH "${PROJECT_DIR}/platform" "${TINYCOMMON_DIR}/cmake")
+set(TYCOMMON_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/tycommon)
+set(CMAKE_MODULE_PATH "${PROJECT_DIR}/platform" "${TYCOMMON_DIR}/cmake")
 
 # add build extensions for tinylibs
 include(extensions)

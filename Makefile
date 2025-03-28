@@ -11,16 +11,16 @@ APP_NAME := hello_world
 BUILD_DIR := build
 
 # include common makefile
-include lib/tinycommon/make/makefile.mk
+include lib/tycommon/make/makefile.mk
 
 # import settings for the used Platform
 ifneq (,$(findstring esp,$(MAKECMDGOALS)))
 APP_DIR := examples/esp/${APP_NAME}
-include lib/tinycommon/make/espidf-54.mk
+include lib/tycommon/make/espidf-54.mk
 endif
 ifneq (,$(findstring zephyr,$(MAKECMDGOALS)))
 APP_DIR := examples/zephyr/${APP_NAME}
-include lib/tinycommon/make/zephyr-410.mk
+include lib/tycommon/make/zephyr-410.mk
 endif
 ifneq (,$(findstring posix,$(MAKECMDGOALS)))
 APP_DIR := examples/posix/${APP_NAME}
