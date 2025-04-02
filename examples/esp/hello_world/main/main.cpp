@@ -16,7 +16,7 @@
 
 #include <nvs_flash.h>
 
-const char *TAG = "main";
+static const char *kLogModule = "HelloWorld";
 
 /*****************************************************************************/
 // just as a hint, but better not to pack, because this object only lives once
@@ -36,7 +36,7 @@ AppPersistentSettings mAppPersistentSettings = {1, 2};
 extern "C" void app_main()
 {
     tinyInstance *instance;
-    tyLogInfoPlat("Starting TySettings example");
+    tyLogInfo(kLogModule, "Starting TySettings example");
     // Initialize NVS
 
     esp_err_t ret = nvs_flash_init();
@@ -44,7 +44,7 @@ extern "C" void app_main()
     {
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
-        ESP_LOGE(TAG, "NVS flash erased");
+        tyLogWarn(kLogModule, "NVS flash erased");
     }
 
     instance = tinyInstanceInitSingle();

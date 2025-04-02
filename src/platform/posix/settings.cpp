@@ -15,8 +15,8 @@
 #include <unistd.h>
 
 #include <ty/common/debug.hpp>
+#include <ty/exit_code.h>
 #include <ty/logging.h>
-#include <ty/platform/exit_code.h>
 // #include <ty/platform/misc.h>
 // #include <ty/platform/radio.h>
 

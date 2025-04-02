@@ -10,12 +10,9 @@
 #include <ty/logging.h>
 #include <ty/platform/toolchain.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
 #include "tysettings/platform/settings.h"
 
-#define LOG_MODULE_NAME main
-LOG_MODULE_REGISTER(main);
-const char *TAG = "main";
+static const char *kLogModule = "HelloWorld";
 
 /*****************************************************************************/
 // just as a hint, but better not to pack, because this object only lives once
@@ -35,7 +32,7 @@ AppPersistentSettings mAppPersistentSettings = {1, 2};
 extern "C" int main(void)
 {
     tinyInstance *instance;
-    tyLogInfoPlat("Starting TySettings example");
+    tyLogInfo(kLogModule, "Starting TySettings example");
 
     instance = tinyInstanceInitSingle();
     // Initialize the settings subsystem

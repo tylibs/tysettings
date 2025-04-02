@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include "tysettings/platform/settings.h"
 
+static const char *kLogModule = "HelloWorld";
+
 /*****************************************************************************/
 // just as a hint, but better not to pack, because this object only lives once
 TY_TOOL_PACKED_BEGIN
@@ -32,7 +34,7 @@ AppPersistentSettings mAppPersistentSettings = {10, 10};
 extern "C" int main(void)
 {
     tinyInstance *instance;
-    tyLogInfoPlat("Starting TySettings example");
+    tyLogInfo(kLogModule, "Starting TySettings example");
     instance = tinyInstanceInitSingle();
     // Initialize the settings subsystem
     tyPlatSettingsInit(instance, NULL, 0);

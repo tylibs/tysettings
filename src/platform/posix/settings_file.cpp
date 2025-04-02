@@ -16,7 +16,7 @@
 
 #include <ty/common/code_utils.hpp>
 #include <ty/common/debug.hpp>
-#include <ty/platform/exit_code.h>
+#include <ty/exit_code.h>
 
 #include "settings_file.hpp"
 
